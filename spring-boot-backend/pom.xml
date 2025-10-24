@@ -35,6 +35,11 @@
       <artifactId>junit-jupiter-params</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <version>3.2.6</version>
+    </dependency>
   </dependencies>
   <build>
     <pluginManagement>
@@ -82,6 +87,9 @@
         <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
+          <configuration>
+            <mainClass>com.mycompany.app.Application</mainClass>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
