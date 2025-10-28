@@ -1,6 +1,8 @@
 package com.mycompany.app.media;
 
 public interface Media {
+    public Long getId();
+
     public String getTitle();
 
     public String getDescription();
