@@ -1,6 +1,9 @@
 package com.mycompany.app.media.book;
 
 import org.springframework.web.bind.annotation.*;
+
+import com.mycompany.app.media.book.BookTypes.Book;
+
 import java.util.List;
 
 @RestController

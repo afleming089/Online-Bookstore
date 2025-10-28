@@ -7,5 +7,13 @@ public interface Media {
 
     public String getAuthor();
 
-    public String getPrice();
+    public double getPrice();
+
+    public void setTitle(String title);
+
+    public void setDescription(String description);
+
+    public void setAuthor(String author);
+
+    public void setPrice(double price);
 }
