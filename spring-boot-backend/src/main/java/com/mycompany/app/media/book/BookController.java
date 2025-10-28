@@ -1,4 +1,4 @@
-package com.mycompany.app.book;
+package com.mycompany.app.media.book;
 
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

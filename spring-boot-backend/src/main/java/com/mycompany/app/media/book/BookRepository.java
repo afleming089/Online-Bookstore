@@ -1,4 +1,4 @@
-package com.mycompany.app.book;
+package com.mycompany.app.media.book;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
