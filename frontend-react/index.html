@@ -1,13 +1,116 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>my-react-app</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    <title>Online Bookstore</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+        header {
+            background-color: #4c6140;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+        header:hover {
+            background-color: #4c614080;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .book-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .book {
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .book:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+        }
+        .book h3 {
+            color: #4c6140;
+        }
+        .book button {
+            background-color: #4c6140;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .book button:hover {
+            background-color: #4c614080;
+        }
+    </style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+    <header>
+        <h1>Online Bookstore</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Books</a>
+            <a href="#">Login</a>
+            <a href="#"><i class="fas fa-shopping-cart"></i></a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Welcome to the Online Bookstore!</h2>
+        
+        <div class="book-list">
+            <div class="book">
+                <h3>The Great Gatsby</h3>
+                <p>by F. Scott Fitzgerald</p>
+                <p><strong>$10.99</strong></p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="book">
+                <h3>Harry Potter</h3>
+                <p>by J.K. Rowling</p>
+                <p><strong>$8.49</strong></p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="book">
+                <h3>To Kill a Mockingbird</h3>
+                <p>by Harper Lee</p>
+                <p><strong>$9.75</strong></p>
+                <button>Add to Cart</button>
+            </div>
+        </div>
+    </main>
+</body>
 </html>
