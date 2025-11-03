@@ -12,16 +12,20 @@ import java.util.List;
 @RequestMapping("/books") // base URL
 public class BookController {
 
-    private final BookService bookService = new BookService();
+    private final BookService bookService;
+
+    BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @GetMapping
-    public List<PhysicalBook> getAllBooks() {
-        return new ResponseEntity<>(bookService.getAllBooks(), HttpStatus.OK);
+    public ResponseEntity<List<PhysicalBook>> getAllBooks() {
+        return new ResponseEntity<>(bookService.findAll(), HttpStatus.OK);
     }
 
     // admin
-    @PostMapping
-    public PhysicalBook create(@RequestBody PhysicalBook PhysicalBook) {
-        return new ResponseEntity<>(bookService.create(), HttpStatus.OK);
-    }
+    // @PostMapping
+    // public PhysicalBook create(@RequestBody PhysicalBook PhysicalBook) {
+    // return new ResponseEntity<>(bookService.create(), HttpStatus.OK);
+    // }
 }
