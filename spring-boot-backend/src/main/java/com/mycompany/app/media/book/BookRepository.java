@@ -1,11 +1,10 @@
 package com.mycompany.app.media.book;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.mycompany.app.media.book.BookTypes.PhysicalBook;
 
 @Repository
-public interface BookRepository extends JpaRepository<PhysicalBook, Long> {
+public interface BookRepository extends CrudRepository<PhysicalBook, Long> {
 }

@@ -19,13 +19,14 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PhysicalBook>> getAllBooks() {
+    public ResponseEntity<Iterable<PhysicalBook>> getAllBooks() {
         return new ResponseEntity<>(bookService.findAll(), HttpStatus.OK);
     }
 
     // admin
-    // @PostMapping
-    // public PhysicalBook create(@RequestBody PhysicalBook PhysicalBook) {
-    // return new ResponseEntity<>(bookService.create(), HttpStatus.OK);
-    // }
+    @PostMapping
+    public ResponseEntity<String> save(@RequestBody PhysicalBook PhysicalBook) {
+        bookService.save(PhysicalBook);
+        return new ResponseEntity<>("POST PhysicalBook ", HttpStatus.OK);
+    }
 }

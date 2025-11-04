@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.mycompany.app.media.book.BookRepository;
 import com.mycompany.app.media.book.BookTypes.PhysicalBook;
 
 @Service
@@ -18,13 +17,14 @@ public class BookService {
     }
 
     @GetMapping
-    public List<PhysicalBook> findAll() {
+    public Iterable<PhysicalBook> findAll() {
         return repo.findAll();
     }
 
     // admin
     @PostMapping
-    public void create() {
+    public void save(PhysicalBook physicalBook) {
+        repo.save(physicalBook);
 
     }
 

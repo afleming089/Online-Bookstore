@@ -16,14 +16,6 @@ public class PhysicalBook implements Book {
     private String ISBN;
     private double price;
 
-    // PhysicalBook(String title, String description, String author, String ISBN,
-    // double price) {
-    // this.title = title;
-    // this.description = description;
-    // this.author = author;
-    // this.ISBN = ISBN;
-    // this.price = price;
-    // }
     @Override
     public Long getId() {
         return id;
