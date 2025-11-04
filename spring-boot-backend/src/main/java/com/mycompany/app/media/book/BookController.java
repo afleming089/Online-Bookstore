@@ -5,8 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
 import com.mycompany.app.media.book.BookTypes.PhysicalBook;
-
-import java.util.List;
+import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController
 @RequestMapping("/books") // base URL
@@ -25,8 +24,9 @@ public class BookController {
 
     // admin
     @PostMapping
-    public ResponseEntity<String> save(@RequestBody PhysicalBook PhysicalBook) {
-        bookService.save(PhysicalBook);
+    public ResponseEntity<String> createBook(@RequestBody JsonNode jsonNode) {
+        // check for admin auth here
+        bookService.createBook(jsonNode);
         return new ResponseEntity<>("POST PhysicalBook ", HttpStatus.OK);
     }
 }
