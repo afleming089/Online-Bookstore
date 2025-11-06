@@ -3,10 +3,10 @@ import { MediaSortStrategy } from "./MediaSortStrategy.js";
 
 import sortArray from 'sort-array';
 
-class AlphabeticalMediaSort extends MediaSortStrategy {
+class LowestPriceMediaSort extends MediaSortStrategy {
     sort(mediaItems: media[]): void {
-        sortArray(mediaItems, { by: 'title' });
+        sortArray(mediaItems, { by: 'price' , order: 'desc' });
     }
 }
 
-export { AlphabeticalMediaSort };
+export { LowestPriceMediaSort };
