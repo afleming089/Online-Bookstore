@@ -1,13 +1,22 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
+import LoginForm from "./LoginForm";
+
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
   useEffect(() => {
     fetch("http://localhost:8080/test")
       .then(res => res.text())
       .then(data => console.log("Backend connected:", data))
       .catch(err => console.error("Could not connect to backend:", err))
   }, [])
+
+  // Show login form first if not logged in
+  if (!isLoggedIn) {
+    return <LoginForm onLoginSuccess={() => setIsLoggedIn(true)} />
+  }
 
   const books = [
     {
@@ -37,7 +46,7 @@ function App() {
         <nav>
           <a href="#">Home</a>
           <a href="#">Books</a>
-          <a href="#">Login</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); setIsLoggedIn(false); }}>Login</a>
           <a href="#"><i className="fas fa-shopping-cart"></i></a>
         </nav>
       </header>
