@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import LoginForm from "./LoginForm";
 import { BooksList } from "./components/pages/BooksList";
+import { Cart } from "./Cart";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentPage, setCurrentPage] = useState('home');
   const [books, setBooks] = useState([
     {
       id: 1,
@@ -56,8 +58,22 @@ function App() {
       <header>
         <h1>Online Bookstore</h1>
         <nav>
-          <a href="#">Home</a>
-          <a href="#">Books</a>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setCurrentPage('home');
+            }}>
+            Home
+          </a>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setCurrentPage('home');
+            }}>
+            Books
+          </a>
           <a
             href="#"
             onClick={(e) => {
@@ -66,18 +82,28 @@ function App() {
             }}>
             Login
           </a>
-          <a href="#">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setCurrentPage('cart');
+            }}>
             <i className="fas fa-shopping-cart"></i>
           </a>
         </nav>
       </header>
 
       <main>
-        <h2>Welcome to the Online Bookstore!</h2>
-
-        <div className="book-list">
-          <BooksList books={books} />
-        </div>
+        {currentPage === 'cart' ? (
+          <Cart />
+        ) : (
+          <>
+            <h2>Welcome to the Online Bookstore!</h2>
+            <div className="book-list">
+              <BooksList books={books} />
+            </div>
+          </>
+        )}
       </main>
     </>
   );
