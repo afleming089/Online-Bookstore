@@ -5,7 +5,7 @@ import sortArray from 'sort-array';
 
 class HighestPriceMediaSort extends MediaSortStrategy {
     sort(mediaItems: media[]): void {
-        sortArray(mediaItems, { by: 'price' });
+        sortArray(mediaItems, { by: 'price', order: 'desc'});
     }
 }
 

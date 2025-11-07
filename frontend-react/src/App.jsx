@@ -1,43 +1,55 @@
-import { useEffect, useState } from 'react'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
 import LoginForm from "./LoginForm";
-
+import { BooksList } from "./components/pages/BooksList";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-  useEffect(() => {
-    fetch("http://localhost:8080/test")
-      .then(res => res.text())
-      .then(data => console.log("Backend connected:", data))
-      .catch(err => console.error("Could not connect to backend:", err))
-  }, [])
-
-  // Show login form first if not logged in
-  if (!isLoggedIn) {
-    return <LoginForm onLoginSuccess={() => setIsLoggedIn(true)} />
-  }
-
-  const books = [
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [books, setBooks] = useState([
     {
       id: 1,
       title: "The Great Gatsby",
       author: "F. Scott Fitzgerald",
-      price: 10.99
+      price: 10.99,
+      isbn: "9780743273565",
     },
     {
       id: 2,
       title: "Harry Potter",
       author: "J.K. Rowling",
-      price: 8.49
+      price: 8.49,
+      isbn: "9780743273565",
     },
     {
       id: 3,
       title: "To Kill a Mockingbird",
       author: "Harper Lee",
-      price: 9.75
-    }
-  ]
+      price: 9.75,
+      isbn: "9780743273565",
+    },
+  ]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/test")
+      .then((res) => res.text())
+      .then((data) => console.log("Backend connected:", data))
+      .catch((err) => console.error("Could not connect to backend:", err));
+
+    fetch("http://localhost:8080/books")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Fetched books from backend:", data);
+        setBooks(data);
+      })
+      .catch((err) =>
+        console.error("Could not fetch books from backend:", err)
+      );
+  }, []);
+
+  // Show login form first if not logged in
+  if (!isLoggedIn) {
+    return <LoginForm onLoginSuccess={() => setIsLoggedIn(true)} />;
+  }
 
   return (
     <>
@@ -46,27 +58,29 @@ function App() {
         <nav>
           <a href="#">Home</a>
           <a href="#">Books</a>
-          <a href="#" onClick={(e) => { e.preventDefault(); setIsLoggedIn(false); }}>Login</a>
-          <a href="#"><i className="fas fa-shopping-cart"></i></a>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setIsLoggedIn(false);
+            }}>
+            Login
+          </a>
+          <a href="#">
+            <i className="fas fa-shopping-cart"></i>
+          </a>
         </nav>
       </header>
 
       <main>
         <h2>Welcome to the Online Bookstore!</h2>
-        
+
         <div className="book-list">
-          {books.map(book => (
-            <div key={book.id} className="book">
-              <h3>{book.title}</h3>
-              <p>by {book.author}</p>
-              <p><strong>${book.price.toFixed(2)}</strong></p>
-              <button>Add to Cart</button>
-            </div>
-          ))}
+          <BooksList books={books} />
         </div>
       </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

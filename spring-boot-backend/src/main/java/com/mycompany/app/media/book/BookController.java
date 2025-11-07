@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController
 @RequestMapping("/books") // base URL
+@CrossOrigin(origins = "http://localhost:5173")
 public class BookController {
 
     private final BookService bookService;
