@@ -79,5 +79,3 @@ coverage/
 *.log
 *.lock
 *.cache
-
-application.properties
