@@ -1,4 +1,4 @@
-package com.mycompany.app.media.bookFACTORY.BookTypes;
+package com.mycompany.app.media.book.BookTypes;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +16,7 @@ public class PhysicalBook implements Book {
     private String ISBN;
     private double price;
 
-// Getters, Setters, toString()
+    // Getters, Setters, toString()
 
     @Override
     public Long getId() {

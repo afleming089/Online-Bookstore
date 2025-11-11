@@ -1,10 +1,6 @@
-package com.mycompany.app.media.bookFACTORY;
+package com.mycompany.app.media.book;
 
 import com.fasterxml.jackson.databind.JsonNode;
-<<<<<<< HEAD
-import com.mycompany.app.media.bookFACTORY.BookFactory;
-import com.mycompany.app.media.bookFACTORY.BookTypes.PhysicalBook;
-=======
 import com.mycompany.app.media.MediaFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +11,6 @@ import java.util.List;
 import java.util.Objects;
 
 import com.mycompany.app.media.book.BookTypes.PhysicalBook;
->>>>>>> 882590bd3a6f920d17df5b748fcbf6d661411e03
 
 /**
  * Service layer for browsing and managing books.
@@ -51,9 +46,8 @@ public class BookService {
         Comparator.comparingDouble(PhysicalBook::getPrice).reversed();
       case "newest" ->
         Comparator.comparing(
-          PhysicalBook::getId,
-          java.util.Comparator.nullsLast(Long::compareTo)
-        ).reversed();
+            PhysicalBook::getId,
+            java.util.Comparator.nullsLast(Long::compareTo)).reversed();
       default -> (a, b) -> 0;
     };
 
@@ -78,13 +72,18 @@ public class BookService {
   @Transactional
   public PhysicalBook updateBook(long id, JsonNode json) {
     PhysicalBook b = repo.findById(id)
-      .orElseThrow(() -> new IllegalArgumentException("Book not found: " + id));
+        .orElseThrow(() -> new IllegalArgumentException("Book not found: " + id));
 
-    if (json.hasNonNull("title"))       b.setTitle(json.get("title").asText());
-    if (json.hasNonNull("author"))      b.setAuthor(json.get("author").asText());
-    if (json.hasNonNull("description")) b.setDescription(json.get("description").asText());
-    if (json.hasNonNull("isbn"))        b.setISBN(json.get("isbn").asText());
-    if (json.hasNonNull("price"))       b.setPrice(json.get("price").asDouble());
+    if (json.hasNonNull("title"))
+      b.setTitle(json.get("title").asText());
+    if (json.hasNonNull("author"))
+      b.setAuthor(json.get("author").asText());
+    if (json.hasNonNull("description"))
+      b.setDescription(json.get("description").asText());
+    if (json.hasNonNull("isbn"))
+      b.setISBN(json.get("isbn").asText());
+    if (json.hasNonNull("price"))
+      b.setPrice(json.get("price").asDouble());
 
     return Objects.requireNonNull(repo.save(b), "repo.save(...) unexpectedly returned null");
   }

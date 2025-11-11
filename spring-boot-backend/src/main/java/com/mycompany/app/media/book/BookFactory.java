@@ -1,8 +1,8 @@
-package com.mycompany.app.media.bookFACTORY;
+package com.mycompany.app.media.book;
 
 import com.mycompany.app.media.Media;
 import com.mycompany.app.media.MediaFactory;
-import com.mycompany.app.media.bookFACTORY.BookTypes.PhysicalBook;
+import com.mycompany.app.media.book.BookTypes.PhysicalBook;
 
 // Concrete Factory to create Book objects
 

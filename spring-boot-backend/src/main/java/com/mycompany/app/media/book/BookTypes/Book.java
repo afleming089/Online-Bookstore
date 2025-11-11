@@ -1,4 +1,4 @@
-package com.mycompany.app.media.bookFACTORY.BookTypes;
+package com.mycompany.app.media.book.BookTypes;
 
 import com.mycompany.app.media.Media;
 
