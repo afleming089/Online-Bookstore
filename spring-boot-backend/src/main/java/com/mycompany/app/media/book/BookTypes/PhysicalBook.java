@@ -16,6 +16,8 @@ public class PhysicalBook implements Book {
     private String ISBN;
     private double price;
 
+// Getters, Setters, toString()
+
     @Override
     public Long getId() {
         return id;

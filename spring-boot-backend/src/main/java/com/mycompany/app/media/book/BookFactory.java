@@ -4,6 +4,8 @@ import com.mycompany.app.media.Media;
 import com.mycompany.app.media.MediaFactory;
 import com.mycompany.app.media.book.BookTypes.PhysicalBook;
 
+// Concrete Factory to create Book objects
+
 public class BookFactory implements MediaFactory {
 
     @Override
