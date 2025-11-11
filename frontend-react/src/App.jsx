@@ -1,35 +1,112 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
+import LoginForm from "./LoginForm";
+import { BooksList } from "./components/pages/BooksList";
+import { Cart } from "./Cart";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentPage, setCurrentPage] = useState('home');
+  const [books, setBooks] = useState([
+    {
+      id: 1,
+      title: "The Great Gatsby",
+      author: "F. Scott Fitzgerald",
+      price: 10.99,
+      isbn: "9780743273565",
+    },
+    {
+      id: 2,
+      title: "Harry Potter",
+      author: "J.K. Rowling",
+      price: 8.49,
+      isbn: "9780743273565",
+    },
+    {
+      id: 3,
+      title: "To Kill a Mockingbird",
+      author: "Harper Lee",
+      price: 9.75,
+      isbn: "9780743273565",
+    },
+  ]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/test")
+      .then((res) => res.text())
+      .then((data) => console.log("Backend connected:", data))
+      .catch((err) => console.error("Could not connect to backend:", err));
+
+    fetch("http://localhost:8080/books")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Fetched books from backend:", data);
+        setBooks(data);
+      })
+      .catch((err) =>
+        console.error("Could not fetch books from backend:", err)
+      );
+  }, []);
+
+  // Show login form first if not logged in
+  if (!isLoggedIn) {
+    return <LoginForm onLoginSuccess={() => setIsLoggedIn(true)} />;
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        <h1>Online Bookstore</h1>
+        <nav>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setCurrentPage('home');
+            }}>
+            Home
+          </a>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setCurrentPage('home');
+            }}>
+            Books
+          </a>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setIsLoggedIn(false);
+            }}>
+            Login
+          </a>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setCurrentPage('cart');
+            }}>
+            <i className="fas fa-shopping-cart"></i>
+          </a>
+        </nav>
+      </header>
+
+      <main>
+        {currentPage === 'cart' ? (
+          <Cart />
+        ) : (
+          <>
+            <h2>Welcome to the Online Bookstore!</h2>
+            <div className="book-list">
+              <BooksList books={books} />
+            </div>
+          </>
+        )}
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

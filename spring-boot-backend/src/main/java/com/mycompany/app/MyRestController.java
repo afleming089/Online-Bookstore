@@ -15,4 +15,9 @@ public class MyRestController {
     public String home() {
         return "Welcome to the home";
     }
+
+    @GetMapping("/test")
+    public String test() {
+        return "Backend is working!";
+    }
 }
