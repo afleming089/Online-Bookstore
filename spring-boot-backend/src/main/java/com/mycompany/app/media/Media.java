@@ -1,6 +1,9 @@
 package com.mycompany.app.media;
 
 public interface Media {
+
+    // Getters
+
     public Long getId();
 
     public String getTitle();
@@ -10,6 +13,8 @@ public interface Media {
     public String getAuthor();
 
     public double getPrice();
+
+    // Setters
 
     public void setTitle(String title);
 
