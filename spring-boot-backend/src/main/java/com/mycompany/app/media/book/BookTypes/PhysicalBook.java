@@ -1,4 +1,4 @@
-package com.mycompany.app.media.book.BookTypes;
+package com.mycompany.app.media.bookFACTORY.BookTypes;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

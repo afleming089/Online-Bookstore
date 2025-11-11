@@ -1,8 +1,8 @@
-package com.mycompany.app.media.book;
+package com.mycompany.app.media.bookFACTORY;
 
 import com.mycompany.app.media.Media;
 import com.mycompany.app.media.MediaFactory;
-import com.mycompany.app.media.book.BookTypes.PhysicalBook;
+import com.mycompany.app.media.bookFACTORY.BookTypes.PhysicalBook;
 
 public class BookFactory implements MediaFactory {
 

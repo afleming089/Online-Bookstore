@@ -5,3 +5,4 @@ export interface media {
     price: number;
     isbn: string;
 }
+

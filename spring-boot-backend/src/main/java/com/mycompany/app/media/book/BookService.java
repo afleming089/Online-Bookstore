@@ -1,4 +1,4 @@
-package com.mycompany.app.media.book;
+package com.mycompany.app.media.bookFACTORY;
 
 import java.util.List;
 
@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.fasterxml.jackson.databind.JsonNode;
-
-import com.mycompany.app.media.book.BookFactory;
-import com.mycompany.app.media.book.BookTypes.PhysicalBook;
+import com.mycompany.app.media.bookFACTORY.BookFactory;
+import com.mycompany.app.media.bookFACTORY.BookTypes.PhysicalBook;
 
 @Service
 public class BookService {
