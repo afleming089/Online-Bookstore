@@ -1,7 +1,7 @@
 import type { media } from "../../MediaSort/media.js";
 
 interface Observer {
-    update(media : media[]) : void;
+    update(mediaMap : Map<number, media>) : void;
     display() : media[];
 }
 
