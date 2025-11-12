@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.mycompany.app.media.book.BookTypes.PhysicalBook;
 
 @Repository
-public interface BookRepository extends JpaRepository<PhysicalBook, Long> { }
+public interface BookRepository extends JpaRepository<PhysicalBook, Long> {
+}

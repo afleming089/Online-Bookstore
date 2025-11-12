@@ -26,7 +26,8 @@ public class BookController {
 
   // PUBLIC: GET /books?sortBy=alpha|priceAsc|priceDesc|newest
   @GetMapping
-  public ResponseEntity<List<PhysicalBook>> getAllBooks(@RequestParam(value = "sortBy", required = false) String sortBy) {
+  public ResponseEntity<List<PhysicalBook>> getAllBooks(
+      @RequestParam(value = "sortBy", required = false) String sortBy) {
     return ResponseEntity.ok(bookService.findAllSorted(sortBy));
   }
 

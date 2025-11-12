@@ -6,7 +6,7 @@ import { Cart } from "./Cart";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentPage, setCurrentPage] = useState('home');
+  const [currentPage, setCurrentPage] = useState("home");
   const [books, setBooks] = useState([
     {
       id: 1,
@@ -32,12 +32,12 @@ function App() {
   ]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/test")
+    fetch("http://localhost:8081/test")
       .then((res) => res.text())
       .then((data) => console.log("Backend connected:", data))
       .catch((err) => console.error("Could not connect to backend:", err));
 
-    fetch("http://localhost:8080/books")
+    fetch("http://localhost:8081/books")
       .then((res) => res.json())
       .then((data) => {
         console.log("Fetched books from backend:", data);
@@ -62,7 +62,7 @@ function App() {
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              setCurrentPage('home');
+              setCurrentPage("home");
             }}>
             Home
           </a>
@@ -70,7 +70,7 @@ function App() {
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              setCurrentPage('home');
+              setCurrentPage("home");
             }}>
             Books
           </a>
@@ -86,7 +86,8 @@ function App() {
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              setCurrentPage('cart');
+              setCurrentPage("cart");
+              setCurrentBook(e.target.book);
             }}>
             <i className="fas fa-shopping-cart"></i>
           </a>
@@ -94,13 +95,13 @@ function App() {
       </header>
 
       <main>
-        {currentPage === 'cart' ? (
-          <Cart />
+        {currentPage === "cart" || currentPage.page === "cart" ? (
+          <Cart media={currentPage.prop} />
         ) : (
           <>
             <h2>Welcome to the Online Bookstore!</h2>
             <div className="book-list">
-              <BooksList books={books} />
+              <BooksList books={books} setCurrentPage={setCurrentPage} />
             </div>
           </>
         )}
