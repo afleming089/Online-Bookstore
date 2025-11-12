@@ -14,12 +14,8 @@ import java.util.List;
  * Delegates all business logic to BookService.
  */
 @RestController
-<<<<<<< HEAD
-@RequestMapping("/books")
-=======
 @RequestMapping("/books") // base URL
 @CrossOrigin(origins = "http://localhost:5173")
->>>>>>> 82138d7de26a5fc331088f9522642743b6a6091d
 public class BookController {
 
   private final BookService bookService;
