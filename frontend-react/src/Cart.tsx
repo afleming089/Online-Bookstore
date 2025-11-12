@@ -16,7 +16,9 @@ function Cart(props: CartProps) {
   const GUIObserver = new GUIShoppingCartObserver();
   const backendObserver = new GUIShoppingCartObserver();
 
-  const mediaType = new media(
+  let mediaType;
+  if(props.media)
+  mediaType = new media(
     props.media.id,
     props.media.title,
     props.media.description,

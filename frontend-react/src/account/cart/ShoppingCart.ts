@@ -22,7 +22,8 @@ class ShoppingCart implements CartSubject {
         this.media.push(media);
     }
     updateMediaQuantity(id: number, amount: number = 1): void {
-        const mediaItem = this.media[id];
+        const mediaItem = this.media.find((item) => item.id === id);
+
         if (!mediaItem) {
             return;
         }
