@@ -1,23 +1,63 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Cart.css";
 
 import { GUIShoppingCartObserver } from "./account/cart/GUIShoppingCartObserver.js";
+import { ShoppingCart } from "./account/cart/ShoppingCart.js";
+import { media } from "./MediaSort/media.js";
 
-function Cart() {
-  const observer = new GUIShoppingCartObserver();
-  const [cartItems, setCartItems] = useState(observer.display());
+interface CartProps {
+  media: media;
+}
 
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity < 1) return;
-    // setCartItems(
-    //   cartItems.map((item) =>
-    //     item.id === id ? { ...item, quantity: newQuantity } : item
-    //   )
-    // );
+// const mediaSample = new media(0, "sample books", "description", "author", 9.99, "1234567890", 1);
+
+function Cart(props: CartProps) {
+  const shoppingCart = new ShoppingCart();
+  const GUIObserver = new GUIShoppingCartObserver();
+  const backendObserver = new GUIShoppingCartObserver();
+
+  const mediaType = new media(
+    props.media.id,
+    props.media.title,
+    props.media.description,
+    props.media.author,
+    props.media.price,
+    props.media.isbn,
+    1
+  );
+
+
+  console.log(mediaType);
+  
+   // updates display in cart when media is added
+  shoppingCart.addObserver(GUIObserver);
+  // updates backend cart when media is added
+  shoppingCart.addObserver(backendObserver);
+  if(mediaType)
+  shoppingCart.addMedia(mediaType);
+  // updates observer states
+  shoppingCart.notifyObservers();
+
+  const [cartItems, setCartItems] = useState(GUIObserver.display());
+
+  const updateQuantity = (id: number, amount: number) => {
+    shoppingCart.updateMediaQuantity(id, amount);
+    shoppingCart.notifyObservers();
+
+
+    const item = GUIObserver.display()[id];
+    if (item && item.quantity < 1) {
+      shoppingCart.removeMedia(id);
+    }
+
+    setCartItems(GUIObserver.display());
   };
 
   const removeItem = (id: number) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+    shoppingCart.removeMedia(id);
+    shoppingCart.notifyObservers();
+
+    setCartItems(GUIObserver.display());
   };
 
   const calculateTotal = () => {
@@ -40,13 +80,13 @@ function Cart() {
             <div className="item-controls">
               <button
                 className="quantity-btn"
-                onClick={() => updateQuantity(item.id, item.quantity - 1)}>
+                onClick={() => updateQuantity(item.id, -1)}>
                 −
               </button>
               <span>{item.quantity}</span>
               <button
                 className="quantity-btn"
-                onClick={() => updateQuantity(item.id, item.quantity + 1)}>
+                onClick={() => updateQuantity(item.id, +1)}>
                 +
               </button>
               <button onClick={() => removeItem(item.id)}>Remove</button>

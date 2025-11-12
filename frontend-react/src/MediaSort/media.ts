@@ -1,4 +1,4 @@
-export class media {
+class media {
     id: number;
     title: string;
     description: string;
@@ -14,7 +14,7 @@ export class media {
         author: string,
         price: number,
         isbn: string,
-        quantity: number
+        quantity: number = 1
     ) {
         this.id = id;
         this.title = title;
@@ -25,11 +25,13 @@ export class media {
         this.quantity = quantity;
     }
 
-    incrementQuantity(amount : number): void {
-        this.quantity += amount;
+    incrementQuantity(amount : number = 1): void {
+        this.quantity = this.quantity + amount;
     }
 
-    decrementQuantity(amount : number): void {
-        this.quantity = Math.max(0, this.quantity -= amount);
+    decrementQuantity(amount : number = 1): void {
+        this.quantity -= Math.max(0, this.quantity -= amount);
     }
 }
+
+export { media };

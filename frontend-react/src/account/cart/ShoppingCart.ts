@@ -19,18 +19,21 @@ class ShoppingCart implements CartSubject {
     }
 
     addMedia(media: media): void {
-        media.incrementQuantity(1);
         this.media.push(media);
-
-        this.notifyObservers();
     }
-    // addMedia(id: number, amount: number): void {
-    //     this.media[id].incrementQuantity(amount);
-    //     this.notifyObservers();
-    // }
+    updateMediaQuantity(id: number, amount: number = 1): void {
+        const mediaItem = this.media[id];
+        if (!mediaItem) {
+            return;
+        }
+        if (mediaItem.quantity < 1) {
+            return;
+        }
+
+        mediaItem.incrementQuantity(amount);
+    }
     removeMedia(index: number, amount: number = 1): void {
         if (this.media[index]) {
-            this.media[index].decrementQuantity(amount);
             this.media.splice(index, 1);
             this.notifyObservers();
         }
