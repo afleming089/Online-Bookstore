@@ -4,7 +4,7 @@ import { media } from "../../MediaSort/media.js";
 
 class ShoppingCart implements CartSubject {
     private observers: Observer[] = [];
-    private media : media[] = [];
+    private mediaHashmap : Map<media, media> = new Map();
 
     addObserver(observer: Observer): void {
         this.observers.push(observer);
@@ -13,13 +13,15 @@ class ShoppingCart implements CartSubject {
         this.observers = this.observers.filter(obs => obs !== observer);
     }
     notifyObservers(): void {
+        console.log(media);
+        
         for (const observer of this.observers) {
-            observer.update(this.media);
+            observer.update(this.mediaHashmap);
         }
     }
 
     addMedia(media: media): void {
-        this.media.push(media);
+        this.mediaHashmap.set(media.id, media);
     }
     updateMediaQuantity(id: number, amount: number = 1): void {
         const mediaItem = this.media.find((item) => item.id === id);
