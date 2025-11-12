@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import "./Cart.css";
 
 import { GUIShoppingCartObserver } from "./account/cart/GUIShoppingCartObserver.js";
@@ -9,14 +9,17 @@ interface CartProps {
   media: media;
 }
 
-// const mediaSample = new media(0, "sample books", "description", "author", 9.99, "1234567890", 1);
+const mediaSample = new media(0, "sample books", "description", "author", 9.99, "1234567890", 1);
 
 function Cart(props: CartProps) {
-  const shoppingCart = new ShoppingCart();
-  const GUIObserver = new GUIShoppingCartObserver();
-  const backendObserver = new GUIShoppingCartObserver();
+  const [shoppingCart] = useState(new ShoppingCart());
+  const [GUIObserver] = useState(new GUIShoppingCartObserver());
+  const [backendObserver] = useState(new GUIShoppingCartObserver());
 
-  let mediaType;
+  const [cartItems, setCartItems] = useState(GUIObserver.display());
+
+
+  let mediaType: media;
   if(props.media)
   mediaType = new media(
     props.media.id,
@@ -28,36 +31,27 @@ function Cart(props: CartProps) {
     1
   );
 
+  useEffect(() => {
+      // updates display in cart when media is added
+      shoppingCart.addObserver(GUIObserver);
+      // updates backend cart when media is added
+      shoppingCart.addObserver(backendObserver);
 
-  console.log(mediaType);
-  
-   // updates display in cart when media is added
-  shoppingCart.addObserver(GUIObserver);
-  // updates backend cart when media is added
-  shoppingCart.addObserver(backendObserver);
-  if(mediaType)
-  shoppingCart.addMedia(mediaType);
-  // updates observer states
-  shoppingCart.notifyObservers();
+      if(mediaType)
+      shoppingCart.addMedia(mediaType);
 
-  const [cartItems, setCartItems] = useState(GUIObserver.display());
+      setCartItems(GUIObserver.display());
+  }, []);
 
   const updateQuantity = (id: number, amount: number) => {
     shoppingCart.updateMediaQuantity(id, amount);
-    shoppingCart.notifyObservers();
 
-
-    const item = GUIObserver.display()[id];
-    if (item && item.quantity < 1) {
-      shoppingCart.removeMedia(id);
-    }
 
     setCartItems(GUIObserver.display());
   };
 
   const removeItem = (id: number) => {
     shoppingCart.removeMedia(id);
-    shoppingCart.notifyObservers();
 
     setCartItems(GUIObserver.display());
   };

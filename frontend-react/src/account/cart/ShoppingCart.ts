@@ -13,33 +13,36 @@ class ShoppingCart implements CartSubject {
         this.observers = this.observers.filter(obs => obs !== observer);
     }
     notifyObservers(): void {
-        console.log(media);
-        
         for (const observer of this.observers) {
             observer.update(this.mediaHashmap);
         }
     }
 
     addMedia(media: media): void {
-        this.mediaHashmap.set(media.id, media);
+      this.mediaHashmap.set(media.id, media);
+      this.notifyObservers();
     }
     updateMediaQuantity(id: number, amount: number = 1): void {
-        // const mediaItem = this.media.find((item) => item.id === id);
+        const mediaItem = this.mediaHashmap.get(id);
+ 
+        if (!mediaItem) {
+            return;
+        }
 
-        // if (!mediaItem) {
-        //     return;
-        // }
-        // if (mediaItem.quantity < 1) {
-        //     return;
-        // }
+        mediaItem.incrementQuantity(amount);
 
-        // mediaItem.incrementQuantity(amount);
+        if (mediaItem.quantity < 1) {
+            this.mediaHashmap.delete(id);
+            this.notifyObservers();
+            return;
+        }
+
+        this.mediaHashmap.set(id, mediaItem);
+        this.notifyObservers();
     }
-    removeMedia(index: number, amount: number = 1): void {
-        // if (this.media[index]) {
-        //     this.media.splice(index, 1);
-        //     this.notifyObservers();
-        // }
+    removeMedia(id: number): void {
+        this.mediaHashmap.delete(id);
+        this.notifyObservers();
     }
     getMedia(): media[] {
         return Array.from(this.mediaHashmap.values());
