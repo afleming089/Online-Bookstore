@@ -6,8 +6,12 @@ import { HighestPriceMediaSort } from "../../MediaSort/HighestPriceMediaSort.js"
 import { LowestPriceMediaSort } from "../../MediaSort/LowestPriceMediaSort.js";
 import { useState, useEffect, type Key } from "react";
 
+type BooksListProps = {
+  books: any[];
+  setCurrentPage: any; // you can make this more specific later
+};
 
-function BooksList({ books }: { books: any[] }) {
+function BooksList({ books, setCurrentPage }: BooksListProps) {
     const mediaSortContext = new MediaSortContext(new AlphabeticalMediaSort());
     const [sortedBooks, setSortedBooks] = useState<any[]>([...books]);
 
@@ -15,6 +19,10 @@ function BooksList({ books }: { books: any[] }) {
         mediaSortContext.sortMedia(books);
         setSortedBooks([...books]);
     }, []);
+
+    const handleClick = (book: any) => {
+        setCurrentPage({page : "cart", prop : book});
+    }
 
     return <>
         <div className="grid">
@@ -46,7 +54,7 @@ function BooksList({ books }: { books: any[] }) {
                         <strong>${book.price.toFixed(2)}</strong>
                     </p>
                     <p>ISBN : {book.isbn}</p>
-                    <button>Add to Cart</button>
+                    <button onClick={() => handleClick(book)}>Add to Cart</button>
                 </div>
                 ))}
             </div>

@@ -4,7 +4,7 @@ import { media } from "../../MediaSort/media.js";
 
 class ShoppingCart implements CartSubject {
     private observers: Observer[] = [];
-    private media : media[] = [];
+    private mediaHashmap : Map<media, media> = new Map();
 
     addObserver(observer: Observer): void {
         this.observers.push(observer);
@@ -13,24 +13,30 @@ class ShoppingCart implements CartSubject {
         this.observers = this.observers.filter(obs => obs !== observer);
     }
     notifyObservers(): void {
+        console.log(media);
+        
         for (const observer of this.observers) {
-            observer.update(this.media);
+            observer.update(this.mediaHashmap);
         }
     }
 
     addMedia(media: media): void {
-        media.incrementQuantity(1);
-        this.media.push(media);
-
-        this.notifyObservers();
+        this.mediaHashmap.set(media.id, media);
     }
-    // addMedia(id: number, amount: number): void {
-    //     this.media[id].incrementQuantity(amount);
-    //     this.notifyObservers();
-    // }
+    updateMediaQuantity(id: number, amount: number = 1): void {
+        const mediaItem = this.media.find((item) => item.id === id);
+
+        if (!mediaItem) {
+            return;
+        }
+        if (mediaItem.quantity < 1) {
+            return;
+        }
+
+        mediaItem.incrementQuantity(amount);
+    }
     removeMedia(index: number, amount: number = 1): void {
         if (this.media[index]) {
-            this.media[index].decrementQuantity(amount);
             this.media.splice(index, 1);
             this.notifyObservers();
         }

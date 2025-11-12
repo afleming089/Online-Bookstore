@@ -87,6 +87,7 @@ function App() {
             onClick={(e) => {
               e.preventDefault();
               setCurrentPage("cart");
+              setCurrentBook(e.target.book);
             }}>
             <i className="fas fa-shopping-cart"></i>
           </a>
@@ -94,13 +95,13 @@ function App() {
       </header>
 
       <main>
-        {currentPage === "cart" ? (
-          <Cart />
+        {currentPage === "cart" || currentPage.page === "cart" ? (
+          <Cart media={currentPage.prop} />
         ) : (
           <>
             <h2>Welcome to the Online Bookstore!</h2>
             <div className="book-list">
-              <BooksList books={books} />
+              <BooksList books={books} setCurrentPage={setCurrentPage} />
             </div>
           </>
         )}
