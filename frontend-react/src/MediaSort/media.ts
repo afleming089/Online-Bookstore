@@ -6,6 +6,7 @@ class media {
     price: number;
     isbn: string;
     quantity: number;
+    userId: number;
 
     constructor(
         id: number,
@@ -14,7 +15,8 @@ class media {
         author: string,
         price: number,
         isbn: string,
-        quantity: number = 1
+        quantity: number = 1,
+        userId: number = -1
     ) {
         this.id = id;
         this.title = title;
@@ -23,6 +25,7 @@ class media {
         this.price = price;
         this.isbn = isbn;
         this.quantity = quantity;
+        this.userId = userId;
     }
 
     incrementQuantity(amount : number = 1): void {

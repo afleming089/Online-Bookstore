@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
-//@CrossOrigin(origins = "*") // allow frontend calls
+// @CrossOrigin(origins = "*") // allow frontend calls
 @CrossOrigin(origins = "http://localhost:8081")
 public class AuthController {
 
@@ -33,12 +33,12 @@ public class AuthController {
             response.put("message", "Login successful!");
             response.put("role", user.getRole());
             response.put("username", user.getUsername());
+            response.put("userId", String.valueOf(user.getUser_id()));
             return ResponseEntity.ok(response);
         } else {
             response.put("message", "Incorrect password!");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     }
-
 
 }

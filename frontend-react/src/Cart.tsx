@@ -7,9 +7,8 @@ import { media } from "./MediaSort/media.js";
 
 interface CartProps {
   media: media;
+  user : any;
 }
-
-const mediaSample = new media(0, "sample books", "description", "author", 9.99, "1234567890", 1);
 
 function Cart(props: CartProps) {
   const [shoppingCart] = useState(new ShoppingCart());
@@ -18,9 +17,8 @@ function Cart(props: CartProps) {
 
   const [cartItems, setCartItems] = useState(GUIObserver.display());
 
-
   let mediaType: media;
-  if(props.media)
+  if(props.media && props.user)
   mediaType = new media(
     props.media.id,
     props.media.title,
@@ -28,7 +26,8 @@ function Cart(props: CartProps) {
     props.media.author,
     props.media.price,
     props.media.isbn,
-    1
+    1,
+    Number(props.user.userId)
   );
 
   useEffect(() => {
@@ -39,6 +38,8 @@ function Cart(props: CartProps) {
 
       if(mediaType)
       shoppingCart.addMedia(mediaType);
+
+      console.log(backendObserver.display());
 
       setCartItems(GUIObserver.display());
   }, []);

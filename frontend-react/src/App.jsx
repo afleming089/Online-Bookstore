@@ -5,6 +5,7 @@ import { BooksList } from "./components/pages/BooksList";
 import { Cart } from "./Cart";
 
 function App() {
+  const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState("home");
   const [books, setBooks] = useState([
@@ -50,7 +51,9 @@ function App() {
 
   // Show login form first if not logged in
   if (!isLoggedIn) {
-    return <LoginForm onLoginSuccess={() => setIsLoggedIn(true)} />;
+    return (
+      <LoginForm setUser={setUser} onLoginSuccess={() => setIsLoggedIn(true)} />
+    );
   }
 
   return (
@@ -96,7 +99,7 @@ function App() {
 
       <main>
         {currentPage === "cart" || currentPage.page === "cart" ? (
-          <Cart media={currentPage.prop} />
+          <Cart user={user} media={currentPage.prop} />
         ) : (
           <>
             <h2>Welcome to the Online Bookstore!</h2>

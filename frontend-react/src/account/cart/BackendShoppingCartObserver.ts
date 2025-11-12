@@ -5,7 +5,7 @@ class BackendShoppingCartObserver implements Observer {
     private mediaHashMap : Map<number, media> = new Map();
 
     display(): media[] {
-        throw new Error("Method not implemented.");
+        return Array.from(this.mediaHashMap.values());
     }
     async update(mediaHashMap : Map<number, media>): Promise<void> {
         this.mediaHashMap = mediaHashMap;
