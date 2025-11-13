@@ -16,8 +16,8 @@ public class SecurityConfig {
   @Bean
   public WebSecurityCustomizer webSecurityCustomizer() {
     return web -> web.ignoring()
-            .requestMatchers(HttpMethod.GET, "/books", "/books/**")
-            .requestMatchers(HttpMethod.HEAD, "/books", "/books/**");
+        .requestMatchers(HttpMethod.GET, "/books", "/books/**")
+        .requestMatchers(HttpMethod.HEAD, "/books", "/books/**");
   }
 
   /**
@@ -26,23 +26,26 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     return http
-            .csrf(csrf -> csrf.disable())   // disable CSRF for simplicity
-            .cors(cors -> {})               // enable CORS
-            .authorizeHttpRequests(auth -> auth
-                    // allow unauthenticated access to login/signup endpoints
-                    .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
+        .csrf(csrf -> csrf.disable()) // disable CSRF for simplicity
+        .cors(cors -> {
+        }) // enable CORS
+        .authorizeHttpRequests(auth -> auth
+            // allow unauthenticated access to login/signup endpoints
+            .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
 
-                    // allow public GET endpoints
-                    .requestMatchers(HttpMethod.GET, "/", "/home", "/error", "/test").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/books", "/books/**").permitAll()
+            // allow public GET endpoints
+            .requestMatchers(HttpMethod.GET, "/", "/home", "/error", "/test").permitAll()
+            .requestMatchers(HttpMethod.GET, "/books", "/books/**").permitAll()
 
-                    // allow preflight requests
-                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/auth/cart/").permitAll()
+            .requestMatchers(HttpMethod.POST, "/auth/cart/").permitAll()
 
-                    // everything else requires authentication
-                    .anyRequest().authenticated()
-            )
-            .build();
+            // allow preflight requests
+            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+            // everything else requires authentication
+            .anyRequest().authenticated())
+        .build();
   }
 }

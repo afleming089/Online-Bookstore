@@ -24,7 +24,7 @@ class ShoppingCart implements CartSubject {
     }
     updateMediaQuantity(id: number, amount: number = 1): void {
         const mediaItem = this.mediaHashmap.get(id);
- 
+
         if (!mediaItem) {
             return;
         }

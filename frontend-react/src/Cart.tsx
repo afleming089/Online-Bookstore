@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from "react";
 import "./Cart.css";
 
 import { GUIShoppingCartObserver } from "./account/cart/GUIShoppingCartObserver.js";
+import { BackendShoppingCartObserver } from "./account/cart/BackendShoppingCartObserver.js";
 import { ShoppingCart } from "./account/cart/ShoppingCart.js";
 import { media } from "./MediaSort/media.js";
 
@@ -13,7 +14,7 @@ interface CartProps {
 function Cart(props: CartProps) {
   const [shoppingCart] = useState(new ShoppingCart());
   const [GUIObserver] = useState(new GUIShoppingCartObserver());
-  const [backendObserver] = useState(new GUIShoppingCartObserver());
+  const [backendObserver] = useState(new BackendShoppingCartObserver());
 
   const [cartItems, setCartItems] = useState(GUIObserver.display());
 
@@ -38,8 +39,6 @@ function Cart(props: CartProps) {
 
       if(mediaType)
       shoppingCart.addMedia(mediaType);
-
-      console.log(backendObserver.display());
 
       setCartItems(GUIObserver.display());
   }, []);
