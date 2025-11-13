@@ -53,11 +53,9 @@ public class CartController {
 
     @DeleteMapping("/cart")
     public String delete(@RequestBody Map<String, Object> payload) {
-        System.out.println("Ran");
-
-        // Number idObj = (Number) payload.get("id");
-        // long bookId = idObj.longValue();
-        // repo.deleteById(bookId);
+        Number idObj = (Number) payload.get("id");
+        long bookId = idObj.longValue();
+        repo.deleteById(bookId);
 
         return "Cart item deleted successfully";
     }

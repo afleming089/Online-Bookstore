@@ -31,7 +31,7 @@ class ShoppingCart implements CartSubject {
         console.log("ran");
 
         console.log(this.mediaHashmap);
-        
+
         const mediaItem = this.mediaHashmap.get(id);
         console.log(mediaItem);
         console.log(id);
@@ -44,6 +44,7 @@ class ShoppingCart implements CartSubject {
 
         if (mediaItem.quantity < 1) {
             this.mediaHashmap.delete(id);
+            this.removeMedia(id);
             this.notifyObservers();
             return;
         }
@@ -51,8 +52,17 @@ class ShoppingCart implements CartSubject {
         this.mediaHashmap.set(id, mediaItem);
         this.notifyObservers();
     }
-    removeMedia(id: number): void {
+   async removeMedia(id: number): Promise<void> {
         this.mediaHashmap.delete(id);
+
+            const responsePost = await fetch('http://localhost:8081/auth/cart', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({id: id}),
+        });
+
         this.notifyObservers();
     }
     getMedia(): media[] {

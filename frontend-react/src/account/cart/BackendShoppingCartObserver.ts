@@ -39,7 +39,7 @@ class BackendShoppingCartObserver implements Observer {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({id}),
+            body: JSON.stringify([{id : id}]),
         });
     }
 }
