@@ -37,9 +37,8 @@ function Cart(props: CartProps) {
       // updates backend cart when media is added
       shoppingCart.addObserver(backendObserver);
 
-      if(mediaType)
-      shoppingCart.addMedia(mediaType);
-
+      console.log(mediaType);
+      
       fetch(`http://localhost:8081/auth/cart`)
       .then(response => {
         if (!response.ok) {
@@ -51,13 +50,16 @@ function Cart(props: CartProps) {
       .then(cartItems => {
         console.log('User cart items:', cartItems);
         shoppingCart.setMediaHashMap(cartItems);
+
         setCartItems(cartItems);
+        if(mediaType)
+        shoppingCart.addMedia(mediaType);
       })
       .catch(error => {
         console.error('Error fetching cart:', error);
       });
 
-      setCartItems(GUIObserver.display());
+       setCartItems(GUIObserver.display());
   }, []);
 
   const updateQuantity = (id: number, amount: number) => {
@@ -67,8 +69,8 @@ function Cart(props: CartProps) {
   };
 
   const removeItem = (id: number) => {
-    shoppingCart.removeMedia(id);
     backendObserver.remove(id);
+    shoppingCart.removeMedia(id);
 
     setCartItems(GUIObserver.display());
   };

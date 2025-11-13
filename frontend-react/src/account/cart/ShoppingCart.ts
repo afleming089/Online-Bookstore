@@ -54,6 +54,7 @@ class ShoppingCart implements CartSubject {
     }
    async removeMedia(id: number): Promise<void> {
         this.mediaHashmap.delete(id);
+        this.notifyObservers();
 
             const responsePost = await fetch('http://localhost:8081/auth/cart', {
             method: 'DELETE',
@@ -63,7 +64,6 @@ class ShoppingCart implements CartSubject {
             body: JSON.stringify({id: id}),
         });
 
-        this.notifyObservers();
     }
     getMedia(): media[] {
         return Array.from(this.mediaHashmap.values());
