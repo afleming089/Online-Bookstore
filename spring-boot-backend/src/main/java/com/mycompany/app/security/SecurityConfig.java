@@ -40,6 +40,8 @@ public class SecurityConfig {
 
             .requestMatchers(HttpMethod.GET, "/auth/cart/").permitAll()
             .requestMatchers(HttpMethod.POST, "/auth/cart/").permitAll()
+            .requestMatchers(HttpMethod.PUT, "/auth/cart/").permitAll()
+            .requestMatchers(HttpMethod.DELETE, "/auth/cart/").permitAll()
 
             // allow preflight requests
             .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()

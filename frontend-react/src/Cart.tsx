@@ -20,16 +20,16 @@ function Cart(props: CartProps) {
 
   let mediaType: media;
   if(props.media && props.user)
-  mediaType = new media(
-    props.media.id,
-    props.media.title,
-    props.media.description,
-    props.media.author,
-    props.media.price,
-    props.media.isbn,
-    1,
-    Number(props.user.userId)
-  );
+    mediaType = new media(
+      props.media.id,
+      props.media.title,
+      props.media.description,
+      props.media.author,
+      props.media.price,
+      props.media.isbn,
+      1,
+      Number(props.user.userId)
+    );
 
   useEffect(() => {
       // updates display in cart when media is added
@@ -40,18 +40,34 @@ function Cart(props: CartProps) {
       if(mediaType)
       shoppingCart.addMedia(mediaType);
 
+      fetch(`http://localhost:8081/auth/cart`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        return response.json()
+      })
+      .then(cartItems => {
+        console.log('User cart items:', cartItems);
+        setCartItems(cartItems);
+      })
+      .catch(error => {
+        console.error('Error fetching cart:', error);
+      });
+
       setCartItems(GUIObserver.display());
   }, []);
 
   const updateQuantity = (id: number, amount: number) => {
     shoppingCart.updateMediaQuantity(id, amount);
 
-
     setCartItems(GUIObserver.display());
   };
 
   const removeItem = (id: number) => {
     shoppingCart.removeMedia(id);
+    backendObserver.remove(id);
 
     setCartItems(GUIObserver.display());
   };

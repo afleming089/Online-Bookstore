@@ -13,8 +13,16 @@ class BackendShoppingCartObserver implements Observer {
 
         console.log(JSON.stringify(Array.from(this.mediaHashMap.values())));
 
-        const response = await fetch('http://localhost:8081/auth/cart', {
+        const responsePost = await fetch('http://localhost:8081/auth/cart', {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(Array.from(this.mediaHashMap.values())),
+        });
+
+        const response = await fetch('http://localhost:8081/auth/cart', {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -24,6 +32,15 @@ class BackendShoppingCartObserver implements Observer {
         if (!response.ok) {
             throw new Error('Failed to update backend shopping cart');
         }
+    }
+    async remove(id : number){
+            const responsePost = await fetch('http://localhost:8081/auth/cart', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({id}),
+        });
     }
 }
 
