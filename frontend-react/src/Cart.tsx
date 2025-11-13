@@ -50,6 +50,7 @@ function Cart(props: CartProps) {
       })
       .then(cartItems => {
         console.log('User cart items:', cartItems);
+        shoppingCart.setMediaHashMap(cartItems);
         setCartItems(cartItems);
       })
       .catch(error => {

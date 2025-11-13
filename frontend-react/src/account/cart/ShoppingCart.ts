@@ -18,12 +18,23 @@ class ShoppingCart implements CartSubject {
         }
     }
 
+    setMediaHashMap(mediaHashmap : Map<number, media>){
+        this.mediaHashmap = new Map(Array.from(mediaHashmap.values()).map(item => [item.id, new media(item.id, item.title, item.description, item.author, item.price, item.isbn, item.quantity)]));
+    }
+
     addMedia(media: media): void {
       this.mediaHashmap.set(media.id, media);
       this.notifyObservers();
     }
+
     updateMediaQuantity(id: number, amount: number = 1): void {
+        console.log("ran");
+
+        console.log(this.mediaHashmap);
+        
         const mediaItem = this.mediaHashmap.get(id);
+        console.log(mediaItem);
+        console.log(id);
 
         if (!mediaItem) {
             return;
