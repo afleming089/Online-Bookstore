@@ -165,7 +165,7 @@ const CartPage = () => {
           {paymentMethod === "credit" && (
             <input
               className="payment-input"
-              type="text"
+              type="password"
               placeholder="Card number"
               value={cardNumber}
               onChange={(event) => setCardNumber(event.target.value)}
