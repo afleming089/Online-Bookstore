@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Column;
 
 @Entity
 public class PhysicalBook implements Book {
@@ -15,6 +16,10 @@ public class PhysicalBook implements Book {
     private String author;
     private String ISBN;
     private double price;
+    @Column(nullable = false)
+    private boolean active = true;
+    @Column(name = "cover_image_url")
+    private String coverImageUrl;
 
     // Getters, Setters, toString()
 
@@ -76,6 +81,22 @@ public class PhysicalBook implements Book {
     @Override
     public void setISBN(String ISBN) {
         this.ISBN = ISBN;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getCoverImageUrl() {
+        return coverImageUrl;
+    }
+
+    public void setCoverImageUrl(String coverImageUrl) {
+        this.coverImageUrl = coverImageUrl;
     }
 
     @Override

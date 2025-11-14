@@ -7,6 +7,9 @@ public class BookResponse {
     private String description;
     private String isbn;
     private double price;
+    private boolean active;
+    private int inventoryCount;
+    private String coverImageUrl;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -25,4 +28,28 @@ public class BookResponse {
 
     public double getPrice() { return price; }
     public void setPrice(double price) { this.price = price; }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public int getInventoryCount() {
+        return inventoryCount;
+    }
+
+    public void setInventoryCount(int inventoryCount) {
+        this.inventoryCount = inventoryCount;
+    }
+
+    public String getCoverImageUrl() {
+        return coverImageUrl;
+    }
+
+    public void setCoverImageUrl(String coverImageUrl) {
+        this.coverImageUrl = coverImageUrl;
+    }
 }
