@@ -1,7 +1,7 @@
-import type { media } from "./media.js";
+import type { Book } from "../types.js";
 
 interface SortStrategy {
-    sort(mediaItems: media[]): void;
+    sort(mediaItems: Book[]): void;
 }
 
 export type { SortStrategy };

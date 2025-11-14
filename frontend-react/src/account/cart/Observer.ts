@@ -1,8 +1,8 @@
-import type { media } from "../../MediaSort/media.js";
+import type { CartItem } from "../../types";
 
 interface Observer {
-    update(mediaMap : Map<number, media>) : void;
-    display() : media[];
+    update(items: Map<number, CartItem>): void;
+    display(): CartItem[];
 }
 
 export type { Observer };

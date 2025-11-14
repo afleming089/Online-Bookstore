@@ -1,4 +1,107 @@
-.grid {
+.books-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.books-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+  justify-content: space-between;
+}
+
+.sort-select {
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.8);
+  color: var(--text);
+  padding: 0.45rem 1rem;
+  font-size: 0.95rem;
+}
+
+/* book grid */
+.book-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.book-tile {
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-align: left;
+}
+
+.book-tile--muted {
+  opacity: 0.6;
+}
+
+.book-tile__cover {
+  width: 140px;
+  height: 210px;
+  border-radius: 0.5rem;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 10px 20px rgba(2, 6, 23, 0.45);
+  position: relative;
+}
+
+.book-tile__price {
+  display: none;
+}
+
+#book-grid .book-tile__meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.book-tile__meta h3 {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.book-tile__meta p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.price-line {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.stock.in {
+  color: var(--success);
+}
+
+.stock.out {
+  color: var(--danger);
+}
+
+.book-tile__actions {
   display: grid;
-  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+
+.book-tile__actions button {
+  border-radius: 0.6rem;
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.6);
+  color: var(--text-muted);
+  padding: 0.3rem 0.35rem;
+  font-size: 0.7rem;
+  min-width: 0;
+}
+
+.book-tile__actions button:first-child {
+  background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+  color: #0f172a;
+  border-color: transparent;
 }

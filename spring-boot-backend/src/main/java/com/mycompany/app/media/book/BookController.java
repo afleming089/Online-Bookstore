@@ -1,7 +1,7 @@
 package com.mycompany.app.media.book;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.mycompany.app.media.book.BookTypes.PhysicalBook;
+import com.mycompany.app.media.book.dto.BookResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,7 +26,7 @@ public class BookController {
 
   // PUBLIC: GET /books?sortBy=alpha|priceAsc|priceDesc|newest
   @GetMapping
-  public ResponseEntity<List<PhysicalBook>> getAllBooks(
+  public ResponseEntity<List<BookResponse>> getAllBooks(
       @RequestParam(value = "sortBy", required = false) String sortBy) {
     return ResponseEntity.ok(bookService.findAllSorted(sortBy));
   }
@@ -34,15 +34,14 @@ public class BookController {
   // ADMIN: create
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
-  public ResponseEntity<String> createBook(@RequestBody JsonNode jsonNode) {
-    bookService.createBook(jsonNode);
-    return ResponseEntity.ok("Created PhysicalBook");
+  public ResponseEntity<BookResponse> createBook(@RequestBody JsonNode jsonNode) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(jsonNode));
   }
 
   // ADMIN: update
   @PreAuthorize("hasRole('ADMIN')")
   @PutMapping("/{id}")
-  public ResponseEntity<PhysicalBook> updateBook(@PathVariable long id, @RequestBody JsonNode jsonNode) {
+  public ResponseEntity<BookResponse> updateBook(@PathVariable long id, @RequestBody JsonNode jsonNode) {
     return ResponseEntity.ok(bookService.updateBook(id, jsonNode));
   }
 

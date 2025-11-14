@@ -1,27 +1,20 @@
-import type { media } from "../../MediaSort/media.js";
-import type { Observer } from "./Observer.js";
+import type { CartItem } from "../../types";
+import type { Observer } from "./Observer";
+
+const STORAGE_KEY = "online-bookstore-cart";
 
 class BackendShoppingCartObserver implements Observer {
-    private mediaHashMap : Map<number, media> = new Map();
+  private items: Map<number, CartItem> = new Map();
 
-    display(): media[] {
-        throw new Error("Method not implemented.");
-    }
-    async update(mediaHashMap : Map<number, media>): Promise<void> {
-        this.mediaHashMap = mediaHashMap;
+  display(): CartItem[] {
+    return Array.from(this.items.values());
+  }
 
-        const response = await fetch('/api/cart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(Array.from(this.mediaHashMap.values())),
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to update backend shopping cart');
-        }
-    }
+  update(items: Map<number, CartItem>): void {
+    this.items = items;
+    const payload = JSON.stringify(Array.from(items.values()));
+    localStorage.setItem(STORAGE_KEY, payload);
+  }
 }
 
-export { BackendShoppingCartObserver };
+export { BackendShoppingCartObserver, STORAGE_KEY as CART_STORAGE_KEY };

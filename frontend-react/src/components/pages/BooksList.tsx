@@ -1,67 +1,86 @@
+import { useEffect, useMemo, useState } from "react";
 import "./BookList.css";
-
+import { BookCard } from "../BookCard";
 import { MediaSortContext } from "../../MediaSort/MediaSortContext.js";
 import { AlphabeticalMediaSort } from "../../MediaSort/AlphabeticalMediaSort.js";
 import { HighestPriceMediaSort } from "../../MediaSort/HighestPriceMediaSort.js";
 import { LowestPriceMediaSort } from "../../MediaSort/LowestPriceMediaSort.js";
-import { useState, useEffect, type Key } from "react";
+import type { Book } from "../../types";
+
+type SortOption = "alpha" | "high" | "low";
 
 type BooksListProps = {
-  books: any[];
-  setCurrentPage: any; // you can make this more specific later
+  books: Book[];
+  isAdmin: boolean;
+  onAddToCart: (book: Book) => void;
+  onEdit: (book: Book) => void;
+  onDelete: (book: Book) => void;
 };
 
-function BooksList({ books, setCurrentPage }: BooksListProps) {
-    const mediaSortContext = new MediaSortContext(new AlphabeticalMediaSort());
-    const [sortedBooks, setSortedBooks] = useState<any[]>([...books]);
+const strategyFactory = (option: SortOption) => {
+  switch (option) {
+    case "high":
+      return new HighestPriceMediaSort();
+    case "low":
+      return new LowestPriceMediaSort();
+    case "alpha":
+    default:
+      return new AlphabeticalMediaSort();
+  }
+};
 
-    useEffect(() => {
-        mediaSortContext.sortMedia(books);
-        setSortedBooks([...books]);
-    }, []);
+const BooksList = ({
+  books,
+  isAdmin,
+  onAddToCart,
+  onEdit,
+  onDelete,
+}: BooksListProps) => {
+  const [sortOption, setSortOption] = useState<SortOption>("alpha");
+  const [sortedBooks, setSortedBooks] = useState<Book[]>([]);
 
-    const handleClick = (book: any) => {
-        setCurrentPage({page : "cart", prop : book});
-    }
+  const sortContext = useMemo(
+    () => new MediaSortContext(new AlphabeticalMediaSort()),
+    [],
+  );
 
-    return <>
-        <div className="grid">
-            <div>
-                <select onChange={(e) => {
-                        const value = e.target.value;
-                        if (value === "alphabetical") {
-                            mediaSortContext.setStrategy(new AlphabeticalMediaSort());
-                        } else if (value === "highestPrice") {
-                            mediaSortContext.setStrategy(new HighestPriceMediaSort());
-                        } else if (value === "lowestPrice") {
-                            mediaSortContext.setStrategy(new LowestPriceMediaSort());
-                        }
-                        mediaSortContext.sortMedia(books);
-                        setSortedBooks([...books]);
-                    }}>
+  useEffect(() => {
+    const copy = [...books];
+    sortContext.setStrategy(strategyFactory(sortOption));
+    sortContext.sortMedia(copy);
+    setSortedBooks(copy);
+  }, [books, sortContext, sortOption]);
 
-                    <option value="alphabetical">Alphabetical</option>
-                    <option value="highestPrice">Highest Price</option>
-                    <option value="lowestPrice">Lowest Price</option>
-                </select>
-            </div>
-            <div className="grid">
-                {sortedBooks.map((book: { id: Key; title: string, author: string, price: number, isbn : string; }) => (
-                <div key={book.id} className="book">
-                    <h3>{book.title}</h3>
-                    <p>by {book.author}</p>
-                    <p>
-                        <strong>${book.price.toFixed(2)}</strong>
-                    </p>
-                    <p>ISBN : {book.isbn}</p>
-                    <button onClick={() => handleClick(book)}>Add to Cart</button>
-                </div>
-                ))}
-            </div>
-        </div>
-    </>
-}
-
+  return (
+    <div className="books-list">
+      <div className="books-toolbar">
+        <span style={{ color: "var(--text-muted)" }}>
+          Curated by mood, sortable by preference.
+        </span>
+        <select
+          className="sort-select"
+          value={sortOption}
+          onChange={(event) => setSortOption(event.target.value as SortOption)}
+        >
+          <option value="alpha">Alphabetical</option>
+          <option value="high">Price (High → Low)</option>
+          <option value="low">Price (Low → High)</option>
+        </select>
+      </div>
+      <div className="book-grid">
+        {sortedBooks.map((book) => (
+          <BookCard
+            key={book.id}
+            book={book}
+            isAdmin={isAdmin}
+            onAddToCart={onAddToCart}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export { BooksList };
-

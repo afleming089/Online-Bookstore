@@ -1,5 +1,5 @@
-import type { media } from "./media.js";
 import type { MediaSortStrategy } from "./MediaSortStrategy.js";
+import type { Book } from "../types.js";
 
 class MediaSortContext {
     private strategy: MediaSortStrategy;
@@ -12,8 +12,8 @@ class MediaSortContext {
         this.strategy = strategy;
     }
 
-    sortMedia(mediaItems: media[]): void {
-        this.strategy.sort(mediaItems);
+    sortMedia(books: Book[]): void {
+        this.strategy.sort(books);
     }
 }
 

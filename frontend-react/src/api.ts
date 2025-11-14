@@ -1,29 +1,59 @@
 import axios from "axios";
+import type {
+  Book,
+  BookDraft,
+  CheckoutRequest,
+  OrderSummary,
+} from "./types.js";
 
-// Domain shape must mirror backend entity
-export interface PhysicalBook {
-  id?: number;
-  title: string;
-  author: string;
-  description?: string;
-  isbn: string;
-  price: number;
-}
+const client = axios.create({
+  baseURL: "http://localhost:8081",
+});
 
-export const listBooks = (sortBy?: string) =>
-  axios.get<PhysicalBook[]>("/api/books", { params: { sortBy } });
+type AuthProvider = () => string | undefined;
 
-export const createBook = (payload: PhysicalBook) =>
-  axios.post("/api/books", payload, {
-    auth: { username: "admin", password: "admin123" },
-  });
+let authHeaderProvider: AuthProvider | undefined;
 
-export const updateBook = (id: number, payload: Partial<PhysicalBook>) =>
-  axios.put(`/api/books/${id}`, payload, {
-    auth: { username: "admin", password: "admin123" },
-  });
+client.interceptors.request.use((config) => {
+  if (authHeaderProvider) {
+    const headerValue = authHeaderProvider();
+    if (headerValue) {
+      config.headers = config.headers ?? {};
+      config.headers.Authorization = headerValue;
+    }
+  }
+  return config;
+});
 
-export const deleteBook = (id: number) =>
-  axios.delete(`/api/books/${id}`, {
-    auth: { username: "admin", password: "admin123" },
-  });
+export const setAuthHeaderProvider = (provider?: AuthProvider) => {
+  authHeaderProvider = provider;
+};
+
+export const listBooks = async (): Promise<Book[]> => {
+  const response = await client.get<Book[]>("/books");
+  return response.data;
+};
+
+export const createBook = async (payload: BookDraft): Promise<Book> => {
+  const response = await client.post<Book>("/books", payload);
+  return response.data;
+};
+
+export const updateBook = async (
+  id: number,
+  payload: Partial<BookDraft>,
+): Promise<Book> => {
+  const response = await client.put<Book>(`/books/${id}`, payload);
+  return response.data;
+};
+
+export const deleteBook = async (id: number): Promise<void> => {
+  await client.delete(`/books/${id}`);
+};
+
+export const checkout = async (
+  request: CheckoutRequest,
+): Promise<OrderSummary> => {
+  const response = await client.post<OrderSummary>("/orders/checkout", request);
+  return response.data;
+};
