@@ -22,8 +22,8 @@ public class SecurityConfig {
   @Bean
   public WebSecurityCustomizer webSecurityCustomizer() {
     return web -> web.ignoring()
-            .requestMatchers(HttpMethod.GET, "/books", "/books/**")
-            .requestMatchers(HttpMethod.HEAD, "/books", "/books/**");
+        .requestMatchers(HttpMethod.GET, "/books", "/books/**")
+        .requestMatchers(HttpMethod.HEAD, "/books", "/books/**");
   }
 
   /**
@@ -32,12 +32,13 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     return http
-            .csrf(csrf -> csrf.disable())   // disable CSRF for simplicity
-            .cors(cors -> {})               // enable CORS
-            .authorizeHttpRequests(auth -> auth
-                    // allow unauthenticated access to login/signup endpoints
-                    .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
+        .csrf(csrf -> csrf.disable()) // disable CSRF for simplicity
+        .cors(cors -> {
+        }) // enable CORS
+        .authorizeHttpRequests(auth -> auth
+            // allow unauthenticated access to login/signup endpoints
+            .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
 
                     // allow public GET endpoints
                     .requestMatchers(HttpMethod.GET, "/", "/home", "/error", "/test").permitAll()
@@ -52,8 +53,8 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/orders", "/orders/**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PATCH, "/orders", "/orders/**").hasRole("ADMIN")
 
-                    // allow preflight requests
-                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            // allow preflight requests
+            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                     // everything else requires authentication
                     .anyRequest().authenticated()

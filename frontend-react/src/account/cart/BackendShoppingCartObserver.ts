@@ -3,6 +3,7 @@ import type { Observer } from "./Observer";
 
 const STORAGE_KEY = "online-bookstore-cart";
 
+
 class BackendShoppingCartObserver implements Observer {
   private items: Map<number, CartItem> = new Map();
 

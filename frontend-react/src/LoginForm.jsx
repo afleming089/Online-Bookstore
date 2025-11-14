@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./LoginForm.css"; 
+import "./LoginForm.css";
 
-export default function LoginForm({ onLoginSuccess }) {
+export default function LoginForm({ onLoginSuccess, setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -21,6 +21,7 @@ export default function LoginForm({ onLoginSuccess }) {
       });
 
       const data = await response.json();
+      setUser(data);
 
       if (response.ok) {
         // Store role in localStorage for use across the app
@@ -77,8 +78,7 @@ export default function LoginForm({ onLoginSuccess }) {
               color: isError ? "red" : "green",
               marginTop: "8px",
               fontWeight: "500",
-            }}
-          >
+            }}>
             {message}
           </p>
         )}
